@@ -34,8 +34,14 @@ public class MapExampleTopologyTest {
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "dummy:1234");
         props.put(SCHEMA_REGISTRY_URL_CONFIG, "mock://dummy:1234");
 
+
         StreamContext.setProps(props);
-        TopologyTestDriver testDriver = new TopologyTestDriver(SimpleStreamWithAvroTopology.getTopology(), props);
+        var top = SimpleStreamWithAvroTopology.getTopology();
+
+        TopologyTestDriver testDriver = new TopologyTestDriver(top, props);
+
+
+        System.out.println(top.describe().toString());
 
         inputTopic = testDriver.createInputTopic(SimpleStreamWithAvroConstants.SOURCE_TOPIC, Serdes.String().serializer(), AvroSerdes.<LegacyOrderEvent>get().serializer());
         outputTopic = testDriver.createOutputTopic(SimpleStreamWithAvroConstants.FILTERED_TOPIC, Serdes.String().deserializer(), AvroSerdes.<LegacyOrderEvent>get().deserializer());

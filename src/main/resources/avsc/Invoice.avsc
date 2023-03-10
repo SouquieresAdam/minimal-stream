@@ -1,0 +1,24 @@
+{
+  "type": "record",
+  "name": "Invoice",
+  "namespace": "io.asouquieres.avromodel",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": "string"
+    },
+    {
+      "name": "customerId",
+      "type": "string"
+    },
+    {
+      "name": "totalInvoiceAmount",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 4,
+        "scale": 2
+      }
+    }
+  ]
+}

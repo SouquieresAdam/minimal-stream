@@ -1,7 +1,6 @@
 package io.asouquieres.kstream.stream.simpleavro;
 
 import io.asouquieres.avromodel.LegacyOrderEvent;
-import io.asouquieres.avromodel.OrderEvent;
 import io.asouquieres.kstream.helpers.AvroSerdes;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
