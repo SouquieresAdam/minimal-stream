@@ -1,0 +1,41 @@
+{
+  "type": "record",
+  "name": "Quotation",
+  "namespace": "io.asouquieres.avromodel",
+  "fields": [
+    {
+      "name": "customerId",
+      "type": "string"
+    },
+    {
+      "name": "quotationDate",
+      "type": {
+        "type" : "long",
+        "logicalType" : "timestamp-millis"
+      }
+    },
+    {
+      "name":"quotationLines",
+      "type":{
+        "type": "array",
+        "items": {
+          "name":"QuotationLine",
+          "type":"record",
+          "fields":[
+            {"name":"productId", "type":"string"},
+            {"name": "productQuantity", "type": "int"},
+            {
+              "name": "customPrice",
+              "type": {
+                "type": "bytes",
+                "logicalType": "decimal",
+                "precision": 4,
+                "scale": 2
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

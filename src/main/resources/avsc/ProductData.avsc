@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "ProductData",
+  "namespace": "io.asouquieres.avromodel",
+  "fields": [
+    {
+      "name": "productId",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 4,
+        "scale": 2
+      }
+    }
+  ]
+}

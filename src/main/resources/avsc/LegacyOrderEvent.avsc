@@ -1,0 +1,33 @@
+{
+  "type": "record",
+  "name": "LegacyOrderEvent",
+  "namespace": "io.asouquieres.avromodel",
+  "fields": [
+    {
+      "name": "orderIdentifier",
+      "type": "string"
+    },
+    {
+      "name": "customerName",
+      "type": "string"
+    },
+    {
+      "name": "orderDate",
+      "type": "string"
+    },
+    {
+      "name":"orderLine",
+      "type":{
+        "type": "array",
+        "items": {
+          "name":"LegacyOrderLine",
+          "type":"record",
+          "fields":[
+            {"name":"productId", "type":"string"},
+            {"name": "quantity", "type": "int"}
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "record",
+  "name": "OrderEvent",
+  "namespace": "io.asouquieres.avromodel",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": "string"
+    },
+    {
+      "name": "customerId",
+      "type": "string"
+    },
+    {
+      "name": "orderDate",
+      "type": {
+        "type" : "long",
+        "logicalType" : "timestamp-millis"
+      }
+    },
+    {
+      "name":"orderLines",
+      "type":{
+        "type": "array",
+        "items": {
+          "name":"OrderLine",
+          "type":"record",
+          "fields":[
+            {"name":"productId", "type":"string"},
+            {"name": "productQuantity", "type": "int"}
+          ]
+        }
+      }
+    }
+  ]
+}
