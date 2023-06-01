@@ -1,4 +1,4 @@
-package io.asouquieres.kstream.stream.onestatetwotopo;
+package io.asouquieres.kstream.stream.repartition;
 
 import io.asouquieres.kstream.helpers.PropertiesLoader;
 import io.asouquieres.kstream.helpers.StreamContext;
@@ -8,9 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-public class OneStateTwoTopoLauncherApp {
+public class RepartitionLauncherApp {
 
-    private static final Logger logger = LogManager.getLogger(OneStateTwoTopoLauncherApp.class);
+    private static final Logger logger = LogManager.getLogger(RepartitionLauncherApp.class);
 
     public static void main(String[] args) {
 
@@ -19,13 +19,12 @@ public class OneStateTwoTopoLauncherApp {
 
         StreamContext.setProps(streamsConfiguration);
 
-        StreamsConfig streamsConfig = new StreamsConfig(streamsConfiguration);
-
         //Build topology
-        var stream = new KafkaStreams(OneStateTwoTopoTopology.getTopology(), streamsConfiguration);
+        var stream = new KafkaStreams(RepartitionTopology.getTopology(), streamsConfiguration);
+
 
         // Define handler in case of unmanaged exception
-        stream.setUncaughtExceptionHandler((thread, e) -> {
+        stream.setUncaughtExceptionHandler( (thread, e) -> {
             logger.fatal("Exception interrupted the stream", e);
             logger.fatal("Closing all threads for " + streamsConfiguration.get(StreamsConfig.APPLICATION_ID_CONFIG));
             stream.close();

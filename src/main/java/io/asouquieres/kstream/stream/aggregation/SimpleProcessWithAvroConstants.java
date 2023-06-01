@@ -8,5 +8,5 @@ public class SimpleProcessWithAvroConstants {
 
 
     public static String CHANGE_PER_CUSTOMER_ID =  "51_CHANGE_PER_CUSTOMERID";
-    public static String CUSTOM_AGGREGATE_STORE = "AGGREGATION_STORE";
+    public static String CUSTOM_AGGREGATION_STORE = "AGGREGATION_STORE";
 }

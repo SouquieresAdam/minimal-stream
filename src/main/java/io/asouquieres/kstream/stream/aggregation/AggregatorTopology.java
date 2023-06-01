@@ -14,7 +14,7 @@ import org.apache.kafka.streams.kstream.Repartitioned;
 import org.apache.kafka.streams.state.Stores;
 
 import static io.asouquieres.kstream.stream.aggregation.SimpleProcessWithAvroConstants.CHANGE_PER_CUSTOMER_ID;
-import static io.asouquieres.kstream.stream.aggregation.SimpleProcessWithAvroConstants.CUSTOM_AGGREGATE_STORE;
+import static io.asouquieres.kstream.stream.aggregation.SimpleProcessWithAvroConstants.CUSTOM_AGGREGATION_STORE;
 
 public class AggregatorTopology {
 
@@ -22,7 +22,7 @@ public class AggregatorTopology {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-        builder.addStateStore(Stores.keyValueStoreBuilder(Stores.persistentKeyValueStore(CUSTOM_AGGREGATE_STORE), Serdes.String(), AvroSerdes.<InternalAggregated51Model>get()));
+        builder.addStateStore(Stores.keyValueStoreBuilder(Stores.persistentKeyValueStore(CUSTOM_AGGREGATION_STORE), Serdes.String(), AvroSerdes.<InternalAggregated51Model>get()));
 
 
         var rawStream = builder.stream(SimpleProcessWithAvroConstants.RAW_51_CHANGE, Consumed.with(Serdes.String(), AvroSerdes.<Raw51Model>get()));
@@ -37,7 +37,7 @@ public class AggregatorTopology {
         builder.stream(SimpleProcessWithAvroConstants.NICE_51_CHANGE, Consumed.with(Serdes.String(), AvroSerdes.<Nice51Model>get()))
                 .selectKey((k,v) -> v.getCustomerId())
                 .repartition(Repartitioned.with(Serdes.String(), AvroSerdes.<Nice51Model>get()).withName(CHANGE_PER_CUSTOMER_ID))
-                .process(io.asouquieres.kstream.stream.aggregation.AggregateProcessor::new, CUSTOM_AGGREGATE_STORE)
+                .process(io.asouquieres.kstream.stream.aggregation.AggregateProcessor::new, CUSTOM_AGGREGATION_STORE)
                 .to(SimpleProcessWithAvroConstants.AGGREGATED_51_CHANGE, Produced.with(Serdes.String(), AvroSerdes.get()));
 
         return builder.build();

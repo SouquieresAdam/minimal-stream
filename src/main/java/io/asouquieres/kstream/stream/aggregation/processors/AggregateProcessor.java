@@ -11,7 +11,7 @@ import org.apache.kafka.streams.state.KeyValueStore;
 
 import java.util.HashMap;
 
-import static io.asouquieres.kstream.stream.aggregation.SimpleProcessWithAvroConstants.CUSTOM_AGGREGATE_STORE;
+import static io.asouquieres.kstream.stream.aggregation.SimpleProcessWithAvroConstants.CUSTOM_AGGREGATION_STORE;
 
 
 /**
@@ -34,7 +34,7 @@ public class AggregateProcessor implements Processor<String, Nice51Model, String
         // Context will provide metadata & advanced PAPI features for the current record for each process method invocation
         this.context = context;
 
-        customStore = context.getStateStore(CUSTOM_AGGREGATE_STORE);
+        customStore = context.getStateStore(CUSTOM_AGGREGATION_STORE);
 
     }
 

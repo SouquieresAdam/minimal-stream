@@ -6,6 +6,6 @@ public class OneStateTwoTopoConstants {
     public static String MIDDLE = "MiddleTopic";
     public static String OUTPUT = "OutputTopic";
 
-    public static String PRODUCT_GKTABLE = "PRODUCT_GKTABLE";
+    public static String COMMON_STATESTORE = "PRODUCT_GKTABLE";
 
 }
