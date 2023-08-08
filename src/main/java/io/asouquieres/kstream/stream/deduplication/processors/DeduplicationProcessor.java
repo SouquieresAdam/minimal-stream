@@ -8,6 +8,9 @@ import org.apache.kafka.streams.processor.api.ProcessorContext;
 import org.apache.kafka.streams.processor.api.Record;
 import org.apache.kafka.streams.state.WindowStore;
 
+import java.time.Duration;
+import java.time.Instant;
+
 /**
  * This transformer remove duplicates input record based on their OrderID field
  *
@@ -37,13 +40,13 @@ public class DeduplicationProcessor implements Processor<String, Invoice, String
     public void process(Record<String, Invoice> record) {
 
         var invoice = record.value();
-        var isDuplicate = deduplicationStore.fetch(invoice.getOrderId(), record.timestamp()) != null;
+        try(var it = deduplicationStore.fetch(invoice.getOrderId(), Instant.ofEpochMilli(record.timestamp()).minus(Duration.ofHours(2)).toEpochMilli(), Instant.ofEpochMilli(record.timestamp()).toEpochMilli())) {
 
-        if(isDuplicate) {
-            // Do not forward
-            return;
+            if(it.hasNext()) {
+                // Do not forward
+                return;
+            }
         }
-
         // Store the key to avoid future duplicates
         deduplicationStore.put(invoice.getOrderId(), invoice.getOrderId(), record.timestamp());
 

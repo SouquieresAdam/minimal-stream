@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Properties;
 
@@ -77,6 +78,8 @@ public class DeduplicationTopologyTest {
     @Test
     public void shouldDeduplicateOrderId() {
 
+
+        var now = Instant.now();
         var c1 = Invoice.newBuilder()
                 .setOrderId("O1")
                 .setTotalInvoiceAmount(BigDecimal.TEN)
@@ -86,9 +89,9 @@ public class DeduplicationTopologyTest {
         var c2 = Invoice.newBuilder(c1).build(); // send exactly the same object
         var c3 = Invoice.newBuilder(c1).setCustomerId("another customer").build(); // send a slightly different value with same order Id
 
-        input.pipeInput("any", c1);
-        input.pipeInput("any", c2);
-        input.pipeInput("any", c3);
+        input.pipeInput("any", c1,now);
+        input.pipeInput("any", c2,now.plus(Duration.ofSeconds(1)));
+        input.pipeInput("any", c3,now.plus(Duration.ofSeconds(2)));
 
         var outputList = output.readValuesToList();
 
@@ -109,6 +112,7 @@ public class DeduplicationTopologyTest {
         var c2 = Invoice.newBuilder(c1).build(); // send exactly the same object
 
         input.pipeInput("any", c1, Instant.ofEpochSecond(Instant.EPOCH.getEpochSecond()+10));
+        input.pipeInput("any", c1, Instant.ofEpochSecond(Instant.EPOCH.getEpochSecond()+100));
         input.pipeInput("any", c2, Instant.ofEpochSecond(Instant.EPOCH.getEpochSecond()+10000)); // more than 2 hours later
 
         var outputList = output.readValuesToList();
