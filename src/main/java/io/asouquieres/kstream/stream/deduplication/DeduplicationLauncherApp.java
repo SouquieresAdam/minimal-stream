@@ -1,8 +1,8 @@
-package io.asouquieres.kstream.stream.simpleavro;
+package io.asouquieres.kstream.stream.deduplication;
 
 import io.asouquieres.kstream.helpers.PropertiesLoader;
 import io.asouquieres.kstream.helpers.StreamContext;
-import io.asouquieres.kstream.stream.repartition.RepartitionTopology;
+import io.asouquieres.kstream.stream.aggregation.AggregatorTopology;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.errors.StreamsUncaughtExceptionHandler;
@@ -12,19 +12,18 @@ import org.apache.logging.log4j.Logger;
 import java.util.concurrent.CountDownLatch;
 
 
-public class SimpleStreamWithAvroLauncherApp {
+public class DeduplicationLauncherApp {
 
-    private static final Logger logger = LogManager.getLogger(SimpleStreamWithAvroLauncherApp.class);
+    private static final Logger logger = LogManager.getLogger(DeduplicationLauncherApp.class);
 
     public static void main(String[] args) {
-
         // Get stream configuration
         var streamsConfiguration = PropertiesLoader.fromYaml("application.yml");
 
         StreamContext.setProps(streamsConfiguration);
 
         //Build topology
-        try(var stream = new KafkaStreams(SimpleStreamWithAvroTopology.getTopology(), streamsConfiguration)) {
+        try(var stream = new KafkaStreams(DeduplicationTopology.getTopology(), streamsConfiguration)) {
             final CountDownLatch latch = new CountDownLatch(1);
             // Define handler in case of unmanaged exception
             stream.setUncaughtExceptionHandler(e -> {

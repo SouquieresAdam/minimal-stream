@@ -1,0 +1,82 @@
+[{
+  "type": "record",
+  "name": "Raw51Model",
+  "namespace": "io.asouquieres.avromodel",
+  "fields": [
+    {
+      "name": "salesforceAssociationKey",
+      "type": "string"
+    },
+    {
+      "name": "metadata",
+      "type": "string"
+    },
+    {
+      "name": "cid",
+      "type": "string"
+    },
+    {
+      "name": "deleted",
+      "type": "boolean"
+    }
+  ]
+},
+  {
+    "type": "record",
+    "name": "Nice51Model",
+    "namespace": "io.asouquieres.avromodel",
+    "fields": [
+      {
+        "name": "unique51associationKey",
+        "type": "string"
+      },
+      {
+        "name": "metadata",
+        "type": "string"
+      },
+      {
+        "name": "customerId",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "boolean"
+      }
+    ]
+  },
+  {
+    "type": "record",
+    "name": "InternalAggregated51Model",
+    "namespace": "io.asouquieres.avromodel",
+    "fields": [
+      {
+        "name": "customerId",
+        "type": "string"
+      },
+      {
+        "name": "customer51choices",
+        "type": {
+          "type" : "map",
+          "values" : "string"
+        }
+      }
+    ]
+  },
+  {
+    "type": "record",
+    "name": "FinalAggregated51Model",
+    "namespace": "io.asouquieres.avromodel",
+    "fields": [
+      {
+        "name": "customerId",
+        "type": "string"
+      },
+      {
+        "name":"metadatas",
+        "type":{
+          "type": "array",
+          "items": "string"
+        }
+      }
+    ]
+  }]

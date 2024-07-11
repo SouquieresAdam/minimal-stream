@@ -1,8 +1,9 @@
-package io.asouquieres.kstream.stream.simpleavro;
+package io.asouquieres.kstream.stream.simpleprocess;
 
 import io.asouquieres.kstream.helpers.PropertiesLoader;
 import io.asouquieres.kstream.helpers.StreamContext;
 import io.asouquieres.kstream.stream.repartition.RepartitionTopology;
+import io.asouquieres.kstream.stream.simpleavro.SimpleStreamWithAvroTopology;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.errors.StreamsUncaughtExceptionHandler;
